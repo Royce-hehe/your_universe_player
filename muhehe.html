@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Universe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #d62828, #000000, #ffffff);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      color: #aaa;
+      text-align: center;
+      padding: 40px;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .album {
+      width: 300px;
+      margin: auto;
+    }
+    .album img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.6);
+    }
+    h2 {
+      margin-top: 15px;
+      font-size: 26px;
+      color: #fff;
+    }
+    .producer {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #eee;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .lyrics {
+      margin-top: 30px;
+      font-size: 18px;
+      line-height: 1.6;
+      min-height: 150px;
+    }
+    .lyrics div {
+      transition: color 0.3s ease;
+    }
+    .highlight {
+      color: #fff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="album">
+    <img src="c:\Users\roiba\Downloads\single.png" alt="Album Cover">
+    <h2>Your Universe</h2>
+    <div class="producer">Producer: Rico Blanco</div>
+    <audio id="song" controls>
+      <source src="c:\Users\roiba\Downloads\your universe.mp3.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="lyrics" id="lyrics"></div>
+
+  <script>
+    const lyrics = [
+      { time: 0, text: "I don't think that you even realize" },
+      { time: 5, text: "The joy you make me feel when I'm inside" },
+      { time: 10, text: "Your universe" },
+      { time: 15, text: "You hold me like I'm the one who's precious" },
+      { time: 20, text: "I hate to break it to you but it's just" },
+      { time: 25, text: "The other way around" },
+      { time: 30, text: "You can thank your stars all you want but" },
+      { time: 35, text: "I'll always be the lucky one" }
+    ];
+
+    const audio = document.getElementById("song");
+    const lyricsDiv = document.getElementById("lyrics");
+
+    // Initialize lyrics display
+    lyrics.forEach(line => {
+      const div = document.createElement("div");
+      div.textContent = line.text;
+      lyricsDiv.appendChild(div);
+    });
+
+    audio.ontimeupdate = () => {
+      let currentTime = audio.currentTime;
+      const lines = lyricsDiv.querySelectorAll("div");
+      lyrics.forEach((line, i) => {
+        let next = lyrics[i+1];
+        if (currentTime >= line.time && (!next || currentTime < next.time)) {
+          lines[i].classList.add("highlight");
+        } else {
+          lines[i].classList.remove("highlight");
+        }
+      });
+    };
+  </script>
+
+</body>
+</html>
